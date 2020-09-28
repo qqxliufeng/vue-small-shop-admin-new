@@ -1,0 +1,134 @@
+clearBoth()
+    &:after
+        clear both
+        content '.'
+        height 0
+        line-height 0
+        visibility hidden
+        display block
+
+borderBottom()
+  border-bottom: 1px solid #f5f5f5
+
+rem(size)
+  unit(size, 'rem')
+
+ellipsis()
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+
+muitlLineEllipsis(line)
+  text-overflow ellipsis
+  display -webkit-box
+  /*! autoprefixer: off */
+  -webkit-box-orient vertical
+  /* autoprefixer: on */
+  -webkit-line-clamp line
+  overflow hidden
+
+circleNotify(color)
+  display inline-block
+  width .1rem
+  height .1rem
+  background-color color
+  border-radius 50%
+
+tabsFixed()
+  position fixed
+  top $headerHeight
+  left 0
+  right 0
+  z-index 99
+
+tabFixed()
+  position fixed
+  top $headerHeight * 2
+  bottom 0
+  left 0
+  right 0
+
+mescroller()
+  position fixed
+  top $headerHeight * 2 - .1rem
+  left 0
+  right 0
+  height 88%
+  & >>> .mescroll-upwarp
+    min-height rem(.1)
+    padding rem(.2) 0
+  // height auto
+  // bottom 0
+  // background-color blue
+
+fixMescroller()
+  mescroller()
+  top $headerHeight
+  height 100%
+  padding-bottom $headerHeight
+  box-sizing border-box
+  
+normalTextStyle(color, size)
+  color color
+  font-size rem(size)
+  line-height rem(size + 0.2)
+
+textStyle(color, size)
+  color color
+  font-size rem(size)
+
+beforeLine()
+  display inline-block
+  content ""
+  background-color $primary
+  width .08rem
+  color $primary
+  height .3rem
+  margin-right .2rem
+  vertical-align middle
+
+horizontalLine(color, heightSize, marginTB = 0, marginLR = 0)
+  background-color color
+  height rem(heightSize)
+  margin rem(marginTB) rem(marginLR)
+
+contentFixed()
+  position fixed
+  left 0
+  right 0
+  top $headerHeight
+  height 100%
+  padding-bottom $headerHeight
+  box-sizing border-box
+  overflow-y scroll
+  z-index 0
+
+setPlaceholder(color)
+  &::-webkit-input-placeholder /* WebKit browsers */
+      color color
+  &:-moz-placeholder /* Mozilla Firefox 4 to 18 */
+      color color
+  &::-moz-placeholder /* Mozilla Firefox 19+ */
+      color color
+  &:-ms-input-placeholder /* Internet Explorer 10+ */
+      color color
+
+askAnswerWrapper(tagBgColor)
+  display flex
+  align-items center
+  & span:nth-child(1)
+      color #ffffff
+      font-size .2rem
+      background-color tagBgColor
+      border-radius .08rem
+      padding .05rem
+      width .25rem
+      height .25rem
+      margin-right .1rem
+      line-height .28rem
+      text-align center
+  & span:nth-child(2)
+      flex 1
+      color #555555
+      font-size .3rem
+      line-height .45rem
