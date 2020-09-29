@@ -137,10 +137,15 @@ router.beforeEach((to, from, next) => {
       handlerWeixinAuth(next)
     } else {
       if (userInfo.isLogin()) {
-        if (userInfo.state.phone) {
+        if (userInfo.state.unionid) {
           next()
         } else {
-          next({ name: 'bindPhone' })
+          // 没有unionId的话，先去绑定unionId
+          if (isWeiXin) {
+            window.location.href = urlPath.weixinAuthUrl
+          } else {
+            next()
+          }
         }
       } else {
         autoLogin(next)
@@ -188,11 +193,19 @@ function autoLogin(next) {
         next()
       }).catch(error => {
         console.log(error)
-        next({ name: 'login' })
+        if (isWeiXin) {
+          window.location.href = urlPath.weixinAuthUrl
+        } else {
+          next({ name: 'login' })
+        }
       })
     }).catch(error => {
       console.log(error)
-      next({ name: 'login' })
+      if (isWeiXin) {
+        window.location.href = urlPath.weixinAuthUrl
+      } else {
+        next({ name: 'login' })
+      }
     })
   } else {
     if (isWeiXin) {

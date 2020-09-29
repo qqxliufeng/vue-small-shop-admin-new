@@ -98,6 +98,10 @@ export const activityDetails = distributorModuleUrl + 'secondary_rebate_details'
 
 export const activityDetailsRules = distributorModuleUrl + 'secondary_rebate_rules'
 
+export const index = distributorModuleUrl + 'index'
+
+export const bindWX = distributorModuleUrl + 'bind_wx'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'
@@ -188,4 +192,6 @@ export function getShareShopUrl(identity, storeId) {
   return baseShareShopUrl + 'index/' + identity + '/' + storeId
 }
 
-export const weixinAuthUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx10a7de3814315ba1&redirect_uri=http://www.yixinglvxing.com/distributor_manage&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect'
+export const baseAddress = 'http://www.yixinglvxing.com/distributor_manage'
+
+export const weixinAuthUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx10a7de3814315ba1&redirect_uri=' + baseAddress + '&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect'

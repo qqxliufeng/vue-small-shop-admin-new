@@ -15,8 +15,9 @@ const userInfo = {
     credit: sessionStorage.getItem('credit'),
     linkname: sessionStorage.getItem('linkname'),
     openid: sessionStorage.getItem('openid'),
-    payType: sessionStorage.getItem('payType') === 'null' ? null : sessionStorage.getItem('payType'),
-    payAccount: sessionStorage.getItem('payAccount') === 'null' ? null : sessionStorage.getItem('payAccount')
+    payType: sessionStorage.getItem('payType') || undefined,
+    payAccount: sessionStorage.getItem('payAccount') || undefined,
+    unionid: localStorage.getItem('unionid') || undefined
   },
   isLogin() {
     // return this.state.id !== '' && this.state.id !== null && this.state.token !== '' && this.state.token !== null && this.state.phone !== '' && this.state.phone !== null
@@ -52,6 +53,7 @@ const userInfo = {
     this.state.openid = userInfo.openid
     this.state.payType = userInfo.pay_type
     this.state.payAccount = userInfo.pay_account
+    this.state.unionid = userInfo.unionid
     sessionStorage.setItem('id', this.state.id)
     localStorage.setItem('token', this.state.token)
     sessionStorage.setItem('name', this.state.name)
@@ -66,6 +68,7 @@ const userInfo = {
     sessionStorage.setItem('openid', this.state.openid)
     sessionStorage.setItem('payType', this.state.payType)
     sessionStorage.setItem('payAccount', this.state.payAccount)
+    localStorage.setItem('unionid', this.state.unionid)
   },
   setUserInfoAvatar(avatar) {
     this.state.avatar = avatar
@@ -104,6 +107,10 @@ const userInfo = {
     this.state.payAccount = payAccount
     sessionStorage.setItem('payType', this.state.payType)
     sessionStorage.setItem('payAccount', this.state.payAccount)
+  },
+  setUserUnionid(unionid) {
+    this.state.unionid = unionid
+    localStorage.setItem('unionid', unionid)
   },
   clearInfoAction() {
     this.state.id = ''

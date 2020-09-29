@@ -45,7 +45,6 @@ export default {
       amount: null,
       authInfo: null,
       from: null,
-      showRedPacket: false,
       menus: {
         makeMoney: {
           title: '我要赚钱',
@@ -147,27 +146,8 @@ export default {
       }, null, (data) => {
         this.amount = data.data
         this.authInfo = this.amount
-        this.showRedPacket = !isNaN(this.amount.red_envelope) && Number(this.amount.red_envelope) === 1
         this.$root.userInfo.setUserInfoBalance(this.amount.balance)
         this.$root.userInfo.setUserInfoRebate(this.amount.rebate)
-        let canShareNext = false
-        let canFloorBuyTicket = false
-        if (this.authInfo) { // 是否获取到数据了
-          let authSet = this.authInfo.auth_set
-          canShareNext = authSet && authSet.indexOf('2') !== -1 // 是不是能发展图片
-          canFloorBuyTicket = authSet && authSet.indexOf('1') !== -1 // 是不是能低价购买
-        }
-        this.$root.state.setUserInfoTask({
-          floorBuyNumber: this.amount.floor_buy_number,
-          shareOrderNumber: this.amount.photo_sharing_order_number
-        })
-        this.$root.state.saveCanShareTicket(canShareNext ? '1' : '0')
-        this.$root.state.saveCanFloorBuyTicket(canFloorBuyTicket ? '1' : '0')
-        // 当有红包活动的时候  先要进行展示红包活动，若是没有红包的话并且是从登录或者注册页面跳转来的，则直接跳转到商品列表
-        if (!this.showRedPacket && (this.from.name === 'login' || this.from.name === 'stepThree' || this.from.path === '/registerseller')) {
-          this.$router.push({ name: 'scenicPostList' })
-        }
-        // end************根据接口返回来的数据判断是不是有对应的权限************
       }, (errorCode, error) => {
         this.$toast(error)
       })
@@ -177,37 +157,6 @@ export default {
         this.$root.$emit('changeTab', { index: '3' })
       } else {
         this.$router.push({ name: 'orderList', query: { type: type.type } })
-      }
-    },
-    closeRedPacket() {
-      this.showRedPacket = false
-    },
-    openRedPacket() {
-      this.showRedPacket = false
-      this.$router.push({ name: 'activityList' })
-    }
-  },
-  created() {
-    if (window.location.href && window.location.href.indexOf('&state=1#/') !== -1) {
-      let url = window.location.href
-      let newUrl = url.replace('#/', '')
-      location.href = newUrl.replace('?', '#/?')
-    } else {
-      let isWeiXin = navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1
-      let isLogin = this.$root.userInfo.isLogin()
-      let isNoOpenId = !this.$root.userInfo.state.openid || this.$root.userInfo.state.openid === 'null'
-      if (isWeiXin && isLogin && isNoOpenId) {
-        if (this.$route.query.code) {
-          // let url = location.href
-          // let index = url.indexOf('code=') + 5
-          // let content = url.slice(index, url.lastIndexOf('&'))
-          // this.$router.push({name: 'auth', query: {code: content}})
-          this.$router.push({ name: 'auth', query: { code: this.$route.query.code } })
-        } else {
-          // 微信去授权
-          let redirectUri = 'http://www.liuyiqinzi.com/distributor_manage'
-          location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx10a7de3814315ba1&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
-        }
       }
     }
   },
