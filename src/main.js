@@ -39,6 +39,7 @@ VueAMap.initAMapApiLoader({
   plugin: ['AMap.Geolocation'],
   v: '1.4.4'
 })
+// 注册组件
 Vue.use(MyNavigation)
 Vue.use(Loading)
 Vue.use(VueAwesomeSwiper)
