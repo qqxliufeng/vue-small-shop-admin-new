@@ -9,16 +9,11 @@
       :orderInfo="amount.my_order"
       v-if="amount"
     ></home-order-info>
+    <upgrade-status />
     <home-menu :menu="menus.myTeam"></home-menu>
     <home-menu :menu="menus.makeMoney"></home-menu>
     <home-menu :menu="menus.mySetting"></home-menu>
     <div style="height: 1.5rem"></div>
-    <red-packet
-      v-if="showRedPacket"
-      @close="closeRedPacket"
-      @open="openRedPacket"
-      :canTouchDismiss="false"
-    ></red-packet>
   </div>
 </template>
 
@@ -28,7 +23,7 @@ import HomeNavigation from './components/HomeNavigation'
 import HomeOrderInfo from './components/HomeOrderInfo'
 import HomeMenu from './components/HomeMenu'
 import HomeBottomNavigation from './components/HomeBottomNavigation'
-import RedPacket from 'common/components/red-packet'
+import UpgradeStatus from './components/UpgradeStatus'
 export default {
   name: 'home',
   components: {
@@ -37,7 +32,7 @@ export default {
     HomeOrderInfo,
     HomeBottomNavigation,
     HomeMenu,
-    RedPacket
+    UpgradeStatus
   },
   data() {
     return {
@@ -83,11 +78,7 @@ export default {
               iconColor: '#99DCFB',
               title: '发展团队',
               callBack: () => {
-                if (this.authInfo && this.authInfo.auth_set && this.authInfo.auth_set.indexOf('2') !== -1) {
-                  this.$router.push({ name: 'partener' })
-                } else {
-                  this.$toast('当前帐号暂无此权限')
-                }
+                this.$router.push({ name: 'partener' })
               }
             },
             {

@@ -12,7 +12,8 @@ import EditNotify from '@/pages/notify/EditNotify'
 import NotifyList from '@/pages/notify/NotifyList'
 import PartnerList from '@/pages/partner/PartnerList'
 import AddPartner from '@/pages/partner/AddPartner'
-import GoodsList from '@/pages/goods/GoodsList'
+import Index from '@/pages/index/Index'
+import ScenicList from '@/pages/goods/ScenicList'
 import SearchGoods from '@/pages/goods/SearchGoods'
 import ScenicDetail from '@/pages/scenic/detail/ScenicDetail'
 import TicketDetail from '@/pages/scenic/detail/TicketDetail'
@@ -51,8 +52,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'goodsList',
-      component: GoodsList,
+      name: 'index',
+      component: Index,
       meta: {
         auth: true,
         showTab: true,
@@ -88,6 +89,11 @@ export default new Router({
         showTab: true,
         keepAlive: true
       }
+    },
+    {
+      path: '/sceniclist',
+      name: 'ScenicList',
+      component: ScenicList
     },
     {
       path: '/orderlist',
@@ -357,6 +363,11 @@ export default new Router({
       path: '/map',
       name: 'map',
       component: () => import('@/pages/common/Map')
+    },
+    {
+      path: '/upgrade-info',
+      name: 'upgradeInfo',
+      component: () => import('@/pages/upgrade/UpgradeInfo')
     }
   ],
   scrollBehavior(to, from, saveTop) {
