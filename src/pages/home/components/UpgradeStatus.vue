@@ -5,11 +5,11 @@
       class="upgrade-wrapper"
     >
       <div class="flex flex-direction justify-between">
-        <span class="text-white text-df">当前等级：{{ getLevelTip() }}</span>
+        <span class="text-white text-df">当前等级：{{ getLevelTip($root.userInfo.state.level) + '合伙人' }}</span>
         <span
           class="text-yellow text-xs"
           style="margin-top: 10px;"
-        >升级成为合伙人享受更多的权益</span>
+        >升级成为{{ getLevelTip(Number($root.userInfo.state.level) - 1) }}合伙人享受更多的权益</span>
       </div>
       <div
         class="upgread-tag text-yellow text-xs"
@@ -28,8 +28,17 @@ export default {
     }
   },
   methods: {
-    getLevelTip() {
-      return '中级分销商'
+    getLevelTip(level = 3) {
+      switch (Number(level)) {
+        case 1:
+          return '高级'
+        case 2:
+          return '中级'
+        case 3:
+          return '初级'
+        default:
+          return '初级'
+      }
     },
     upgrade() {
       this.$router.push({ name: 'upgradeInfo' })

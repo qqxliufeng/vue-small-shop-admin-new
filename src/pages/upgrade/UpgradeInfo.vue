@@ -1,7 +1,7 @@
 <template>
   <div>
     <my-navi
-      title="升级信息"
+      title="升级详情"
       :isFixed="true"
     />
     <div class="user-info-wrapper">
@@ -13,7 +13,7 @@
       </div>
       <div class="nick-wrapper">
         <span class="nick">{{$root.userInfo.state.name}}</span>
-        <span class="grade">中级分销商</span>
+        <span class="grade">{{getLevelTip($root.userInfo.state.level)}}合伙人</span>
       </div>
     </div>
     <div
@@ -30,7 +30,7 @@
           <div class="task-sub-title">满足以下条件即可免费升级</div>
         </div>
         <div class="right-wrapper">
-          升级中级分销商
+          升级{{getLevelTip(Number($root.userInfo.state.level) - 1)}}合伙人
         </div>
       </div>
       <div class="task-list-wrappar">
@@ -43,8 +43,8 @@
           <span class="task-item-sub">已完成{{taskData.complement.low_num + '/' + taskData.low}}</span>
         </div>
         <div class="task-item">
-          <span class="task-item-title">60天结算订单数大于等于{{taskData.order}}单</span>
-          <span class="task-item-sub">已完成{{taskData.complement.order_total + '/' + taskData.order}}</span>
+          <span class="task-item-title">结算{{Number($root.userInfo.state.level) === 1 ? '订单' : '返佣金额' }}大于等于{{((Number($root.userInfo.state.level) === 1 ? taskData.order : taskData.rebate) || 0)}}{{Number($root.userInfo.state.level) === 1 ? '单' : '元' }}</span>
+          <span class="task-item-sub">已完成{{(Number($root.userInfo.state.level) === 1 ? taskData.complement.order_total : taskData.complement.rebate) + '/' + ((Number($root.userInfo.state.level) === 1 ? taskData.order : taskData.rebate) || 0)}}</span>
         </div>
       </div>
     </div>
@@ -53,6 +53,7 @@
         type="success"
         class="tip"
         :disabled="upgradeStatus !== 1"
+        @click="upgradeApply"
       >{{ upgradeStateTip }}</el-button>
     </div>
   </div>
@@ -82,9 +83,9 @@ export default {
     upgradeStateTip() {
       switch (this.upgradeStatus) {
         case 0:
-          return '升级成为中级合伙人'
+          return '任务还未完成，加油哦~'
         case 1:
-          return '升级成为中级合伙人'
+          return '升级成为' + this.getLevelTip(Number(this.$root.userInfo.state.level) - 1) + '合伙人'
         case 2:
           return '正在审核中…'
         default:
@@ -96,14 +97,28 @@ export default {
     this.getData()
   },
   methods: {
+    getLevelTip(level = 3) {
+      switch (Number(level)) {
+        case 1:
+          return '高级'
+        case 2:
+          return '中级'
+        case 3:
+          return '初级'
+        default:
+          return '初级'
+      }
+    },
     getData() {
       this.$http(this.$urlPath.upgradeStatus, {}, '', (data) => {
         this.taskData.fans = data.data.store_set.fans
         this.taskData.order = data.data.store_set.order
         this.taskData.low = data.data.store_set.low
+        this.taskData.rebate = data.data.store_set.rebate
         this.taskData.complement.low_num = data.data.low_num
         this.taskData.complement.user_num = data.data.user_num
         this.taskData.complement.order_total = data.data.order_total
+        this.taskData.complement.rebate = data.data.rebate
         this.details = data.data.store_set.apply_details
         this.upgradeStatus = data.data.upgrade_status
         this.$nextTick(_ => {
@@ -115,6 +130,14 @@ export default {
         })
       }, (errorCode, error) => {
         this.errorTip = error
+      })
+    },
+    upgradeApply() {
+      this.$http(this.$urlPath.upgradeApply, {}, '', (data) => {
+        this.$toast('申请成功')
+        this.upgradeStatus = 2
+      }, (errorCode, error) => {
+        this.$toast(error)
       })
     }
   }

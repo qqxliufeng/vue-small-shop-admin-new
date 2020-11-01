@@ -17,28 +17,14 @@ const userInfo = {
     openid: sessionStorage.getItem('openid'),
     payType: sessionStorage.getItem('payType') || undefined,
     payAccount: sessionStorage.getItem('payAccount') || undefined,
-    unionid: localStorage.getItem('unionid') || undefined
+    unionid: localStorage.getItem('unionid') || undefined,
+    level: sessionStorage.getItem('level') || 3
   },
   isLogin() {
     // return this.state.id !== '' && this.state.id !== null && this.state.token !== '' && this.state.token !== null && this.state.phone !== '' && this.state.phone !== null
     return this.state.id && this.state.token && this.state.phone
   },
   setUserInfo(userInfo) {
-    // avatar: "/assets/img/avatar.png"
-    // city: "山西省/太原市"
-    // createtime: 1601261233
-    // distributor_id: 159
-    // expires_in: 2592000
-    // expiretime: 1603853233
-    // id: 159
-    // linkname: "123"
-    // name: "测试注册"
-    // openid: "o3Q6e1QP1C0PqdqeJc7dVnjHCrjg"
-    // pay_account: "15910101117"
-    // pay_type: "alipay"
-    // phone: "15910101117"
-    // store_id: 2
-    // token: "6c43b0cc-782d-4fed-bff5-e8379c109646"
     this.state.id = userInfo.id
     this.state.storeId = userInfo.store_id
     this.state.token = userInfo.token
@@ -54,6 +40,7 @@ const userInfo = {
     this.state.payType = userInfo.pay_type
     this.state.payAccount = userInfo.pay_account
     this.state.unionid = userInfo.unionid
+    this.state.level = userInfo.level
     sessionStorage.setItem('id', this.state.id)
     localStorage.setItem('token', this.state.token)
     sessionStorage.setItem('name', this.state.name)
@@ -68,6 +55,7 @@ const userInfo = {
     sessionStorage.setItem('openid', this.state.openid)
     sessionStorage.setItem('payType', this.state.payType)
     sessionStorage.setItem('payAccount', this.state.payAccount)
+    sessionStorage.setItem('level', this.state.level)
     localStorage.setItem('unionid', this.state.unionid)
   },
   setUserInfoAvatar(avatar) {
@@ -97,6 +85,10 @@ const userInfo = {
   setUserInfoBalance(balance) {
     this.state.balance = balance
     sessionStorage.setItem('balance', this.state.balance)
+  },
+  setLevel(level) {
+    this.state.level = level
+    sessionStorage.setItem('level', this.state.level)
   },
   setUserInfoOpenId(openid) {
     this.state.openid = openid

@@ -104,6 +104,8 @@ export const bindWX = distributorModuleUrl + 'bind_wx'
 
 export const upgradeStatus = distributorModuleUrl + 'upgradeStatus'
 
+export const upgradeApply = distributorModuleUrl + 'upgradeApply'
+
 const orderUrl = baseUrl + 'order/'
 
 export const createOrder = orderUrl + 'create_order'

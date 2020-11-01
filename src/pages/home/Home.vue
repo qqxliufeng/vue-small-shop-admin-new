@@ -9,7 +9,7 @@
       :orderInfo="amount.my_order"
       v-if="amount"
     ></home-order-info>
-    <upgrade-status />
+    <upgrade-status v-if="Number($root.userInfo.state.level) === 2 || Number($root.userInfo.state.level) === 3" />
     <home-menu :menu="menus.myTeam"></home-menu>
     <home-menu :menu="menus.makeMoney"></home-menu>
     <home-menu :menu="menus.mySetting"></home-menu>
@@ -139,6 +139,7 @@ export default {
         this.authInfo = this.amount
         this.$root.userInfo.setUserInfoBalance(this.amount.balance)
         this.$root.userInfo.setUserInfoRebate(this.amount.rebate)
+        this.$root.userInfo.setLevel(this.amount.level)
       }, (errorCode, error) => {
         this.$toast(error)
       })
