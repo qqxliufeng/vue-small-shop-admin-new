@@ -6,11 +6,24 @@
         <img :src="$utils.image.getImagePath($root.userInfo.state.avatar)">
       </div>
       <span class="nick-name">{{$root.userInfo.state.name}}</span>
-      <span class="level-tip">{{ getLevelTip(this.$root.userInfo.state.level) + '合伙人'}}</span>
-      <home-shop-num
+      <span class="level-tip">
+        {{ getLevelTip(this.$root.userInfo.state.level)}}
+        <span style="font-weight: bold">{{ 'No.' + $root.userInfo.state.id }}</span>
+      </span>
+      <div
+        class="vip-wrapper"
+        v-if="parseInt(amount.year_card) === 1"
+      >
+        <img
+          style="width: 25px"
+          :src="require('../../../assets/images/VIP.png')"
+        >
+        <span class="expired-time"> {{ amount.expired_time + ' 到期'}}</span>
+      </div>
+      <!-- <home-shop-num
         title="会 员 号："
         :num="Number($root.userInfo.state.id)"
-      ></home-shop-num>
+      ></home-shop-num> -->
       <div class="num-wraper">
         <home-shop-num
           title="店铺粉丝："
@@ -187,6 +200,16 @@ export default {
           color: $primary;
           margin-top: rem(0.2);
         }
+      }
+    }
+
+    .vip-wrapper {
+      margin-top: 2px;
+
+      .expired-time {
+        color: #fbbd08;
+        font-size: 12px;
+        vertical-align: baseline;
       }
     }
   }

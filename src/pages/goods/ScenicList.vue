@@ -66,19 +66,16 @@ export default {
   },
   methods: {
     upCallBack(page, mescroll) {
-      let lebelId = this.tempTag ? this.tempTag.id : ''
-      this.$http(this.$urlPath.categoryIndex, {
-        cate_id: this.categoryId,
+      let labelId = this.tempTag ? this.tempTag.id : 0
+      this.$http(this.$urlPath.goodsList, {
+        category_id: this.categoryId,
         page: page.num,
-        identity: this.$root.state.identity,
-        store_id: this.$root.state.storeId,
-        label_id: lebelId
+        label_id: labelId
       }, null, (data) => {
         if (!this.tags) {
           this.tags = data.data.label
-          this.tags.unshift({ id: 0, name: '全部' })
         }
-        this.loadSuccess(page, mescroll, data.data.scenic)
+        this.loadSuccess(page, mescroll, data.data.data)
       }, (errorCode, error) => {
         this.$toast(error)
         this.loadError(mescroll)
