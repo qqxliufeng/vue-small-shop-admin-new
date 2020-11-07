@@ -12,13 +12,14 @@
       </span>
       <div
         class="vip-wrapper"
-        v-if="parseInt(amount.year_card) === 1"
+        v-if="amount"
       >
         <img
+          v-if="parseInt(amount.year_card) === 1"
           style="width: 25px"
           :src="require('../../../assets/images/VIP.png')"
         >
-        <span class="expired-time"> {{ amount.expired_time + ' 到期'}}</span>
+        <span class="expired-time"> {{ Number(amount.expired_time) === 0 ? '永久会员' : amount.expired_time + ' 到期'}}</span>
       </div>
       <!-- <home-shop-num
         title="会 员 号："
