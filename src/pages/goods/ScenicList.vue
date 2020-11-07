@@ -86,7 +86,7 @@ export default {
       this.$refs.mescroll.mescroll.resetUpScroll(true)
     },
     itemClick(item) {
-      this.$router.push({ name: 'scenicDetail', query: { s: item.s_id, i: this.$root.state.identity, t: this.$root.state.storeId } })
+      this.$router.push({ name: 'scenicDetail', query: { scenicId: item.scenic_id, i: this.$root.state.identity, t: this.$root.state.storeId } })
     },
     menuItemClick(item) {
       this.categoryId = item.id

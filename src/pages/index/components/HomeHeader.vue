@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     startSearch() {
-      this.$router.push({ name: 'homeSearch' })
+      this.$router.push({ name: 'searchGoods' })
     },
     startPersonal() {
       this.$router.replace({ name: 'personal', params: { backName: 'personal' } })

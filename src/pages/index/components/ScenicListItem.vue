@@ -29,14 +29,10 @@
         <span class="price">￥{{item.minPrice || 0}}<i>起</i></span>
       </div>
       <div class="order-wrapper">
-        <el-rate
-          :value="Number(item.score)"
-          disabled
-          show-score
-          text-color="#ff9900"
-          :score-template="Number(item.score) > 0 ? '{value}分' : '暂无评价'"
-        >
-        </el-rate>
+        <span
+          class="order"
+          style="background-color: #64bbae; margin-right: 10px"
+        >分享：{{item.max_price}}</span>
         <span class="order">立即预订</span>
       </div>
     </div>
@@ -175,7 +171,7 @@ export default {
 
     .order-wrapper {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
 
       .price {
         textStyle($primary, 0.32);

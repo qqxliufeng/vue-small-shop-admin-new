@@ -9,7 +9,6 @@
         <p class="s-d-hot-item-info-price"><span>￥{{item.minPrice}}</span></p>
       </div>
       <div class="s-d-hot-item-info-remark-wrapper">
-        <!-- <p class="s-d-hot-item-info-remark">{{item.before}}</p> -->
         <div class="tags">
           <span
             v-for="(itemTag, index) of item.tag"
@@ -32,7 +31,6 @@
             <span
               class="ticket-must"
               @click="itemClickOrder(item)"
-              v-if="isCanReseve"
             >购票须知<i class="el-icon-arrow-right"></i></span>
           </p>
         </div>
@@ -51,10 +49,6 @@
         </div>
       </div>
     </div>
-    <p
-      v-if="Number(this.item.buy_status) !== 1"
-      class="reseve-tip"
-    >提示：此商品只能用于分享</p>
     <div class="line"></div>
   </div>
 </template>
@@ -66,12 +60,6 @@ export default {
   props: {
     item: Object
   },
-  computed: {
-    isCanReseve() {
-      // 判断是不是可以购买此产品
-      return this.$root.state.canFloorBuyTicket === '1'
-    }
-  },
   data() {
     return {
       qianggouIcon
@@ -80,17 +68,6 @@ export default {
   methods: {
     itemClickOrder(item) {
       this.$emit('reseve-detail', item)
-      // if (!this.isCanReseve) {
-      //   this.$toast('此商品只能用于分享赚取佣金')
-      //   this.itemClickShare(item)
-      //   return
-      // }
-      // if (Number(this.item.floor_price) === 2) {
-      //   this.$emit('reseve-detail', item)
-      // } else {
-      //   this.$toast('此商品只能用于分享赚取佣金')
-      //   this.$emit('share-ticket', item)
-      // }
     },
     itemClickShare(item) {
       this.$emit('share-ticket', item)

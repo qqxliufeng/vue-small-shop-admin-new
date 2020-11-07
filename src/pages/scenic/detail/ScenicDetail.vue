@@ -34,18 +34,9 @@
           :typeGoodsList="typeGoodsList"
           @reseve-detail="reseveDetail"
           @share-ticket="shareTicket"
-          :title="scenicInfo.categoryId === 14 ? '跟团游' : '优惠信息'"
+          title="优惠信息"
           @show-more="showMoreTicket"
-        ></scenic-detail-ticket-type>
-      </div>
-      <div id="route">
-        <scenic-detail-ticket-type
-          v-show="isShowRoute"
-          :typeGoodsList="route"
-          @reseve-detail="reseveRouteDetail"
-          @share-ticket="shareTicket"
-          title="跟团游"
-        ></scenic-detail-ticket-type>
+        />
       </div>
       <div id="message">
         <scenic-detail-leave-message :ask="ask"></scenic-detail-leave-message>
@@ -117,7 +108,6 @@ export default {
       scenicInfo: {},
       hotGoodsList: [],
       typeGoodsList: [],
-      route: null,
       scenicId: null,
       identity: null,
       storeId: null,
@@ -132,16 +122,6 @@ export default {
     }
   },
   computed: {
-    isShowRoute() {
-      if (this.route) {
-        for (const item of this.route) {
-          if (item.goods_list && item.goods_list.length > 0) {
-            return true
-          }
-        }
-      }
-      return false
-    },
     showTab() {
       return this.scrollTop >= this.headerHeight - this.marginTop
     }
@@ -223,12 +203,6 @@ export default {
             title: this.scenicInfo.categoryId === 14 ? '跟团游' : '优惠信息',
             type: 'ticketType'
           })
-          if (this.isShowRoute) {
-            this.tabList.push({
-              title: '跟团游',
-              type: 'route'
-            })
-          }
           this.tabList.push({
             title: '留言板',
             type: 'message'
@@ -253,13 +227,9 @@ export default {
             start: this.headerHeight - this.marginTop,
             end: this.headerHeight - this.marginTop + document.getElementById('ticketType').offsetHeight + 11
           }
-          this.heightListInfo.route = {
-            start: this.heightListInfo.ticketType.end,
-            end: this.heightListInfo.ticketType.end + document.getElementById('route').offsetHeight + 11
-          }
           this.heightListInfo.message = {
-            start: this.heightListInfo.route.end,
-            end: this.heightListInfo.route.end + document.getElementById('message').offsetHeight + 11
+            start: this.heightListInfo.ticketType.end,
+            end: this.heightListInfo.ticketType.end + document.getElementById('message').offsetHeight + 11
           }
           this.heightListInfo.comment = {
             start: this.heightListInfo.message.end,
@@ -276,23 +246,11 @@ export default {
       if (this.scrollTop >= this.heightListInfo.ticketType.start && this.scrollTop <= this.heightListInfo.ticketType.end) {
         this.mTabIndex = 0
       }
-      if (this.tabList.length === 4) {
-        if (this.scrollTop >= this.heightListInfo.route.start && this.scrollTop <= this.heightListInfo.route.end) {
-          this.mTabIndex = 1
-        }
-        if (this.scrollTop >= this.heightListInfo.message.start && this.scrollTop <= this.heightListInfo.message.end) {
-          this.mTabIndex = 2
-        }
-        if (this.scrollTop >= this.heightListInfo.comment.start && this.scrollTop <= this.heightListInfo.comment.end) {
-          this.mTabIndex = 3
-        }
-      } else {
-        if (this.scrollTop >= this.heightListInfo.message.start && this.scrollTop <= this.heightListInfo.message.end) {
-          this.mTabIndex = 1
-        }
-        if (this.scrollTop >= this.heightListInfo.comment.start && this.scrollTop <= this.heightListInfo.comment.end) {
-          this.mTabIndex = 2
-        }
+      if (this.scrollTop >= this.heightListInfo.message.start && this.scrollTop <= this.heightListInfo.message.end) {
+        this.mTabIndex = 1
+      }
+      if (this.scrollTop >= this.heightListInfo.comment.start && this.scrollTop <= this.heightListInfo.comment.end) {
+        this.mTabIndex = 2
       }
     },
     tabItemClick(index) {
